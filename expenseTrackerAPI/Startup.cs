@@ -39,7 +39,8 @@ namespace expenseTrackerAPI
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Expense Tracker API",
-                    Version = "v1"
+                    Version = "v1",
+                    Description = "Group project for CSCI 4700/5700 with Dr.Sarkar"  
                 });
                 // add security
             });
