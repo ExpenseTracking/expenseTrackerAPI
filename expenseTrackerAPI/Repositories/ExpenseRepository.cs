@@ -42,21 +42,22 @@ namespace expenseTrackerAPI.Repositories
         {
             using (var conn = new MySqlConnection(_connectionString))
             {
-                //string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
-                //                VALUES (@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted); 
-                //                SELECT LAST_INSERT_ID();";
+                // query for mysql
+                string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
+                               VALUES (@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted); 
+                               SELECT LAST_INSERT_ID();";
 
                 // query for sql server
-                string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
-                                VALUES(@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted);
-                                SELECT SCOPE_IDENTITY();";
+                // string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
+                //                 VALUES(@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted);
+                //                 SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@userId", expense.userId);
-                parameters.Add("@transactionTypeId", expense.transactionTypeId);
-                parameters.Add("@amount", expense.amount);
-                parameters.Add("@date", expense.date);
-                parameters.Add("@description", expense.description);
+                parameters.Add("@userId", expense.UserId);
+                parameters.Add("@transactionTypeId", expense.TransactionTypeId);
+                parameters.Add("@amount", expense.Amount);
+                parameters.Add("@date", expense.Date);
+                parameters.Add("@description", expense.Description);
                 parameters.Add("@createdAt", DateTime.UtcNow);
                 parameters.Add("@updatedAt", DateTime.UtcNow);
                 parameters.Add("@deletedAt", null);
@@ -75,12 +76,12 @@ namespace expenseTrackerAPI.Repositories
                                 WHERE expenseId = @expenseId;";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@expenseId", expense.expenseId);
-                parameters.Add("@userId", expense.userId);
-                parameters.Add("@transactionTypeId", expense.transactionTypeId);
-                parameters.Add("@amount", expense.amount);
-                parameters.Add("@date", expense.date);
-                parameters.Add("@description", expense.description);
+                parameters.Add("@expenseId", expense.ExpenseId);
+                parameters.Add("@userId", expense.UserId);
+                parameters.Add("@transactionTypeId", expense.TransactionTypeId);
+                parameters.Add("@amount", expense.Amount);
+                parameters.Add("@date", expense.Date);
+                parameters.Add("@description", expense.Description);
                 parameters.Add("@updatedAt", DateTime.UtcNow);
 
                 var rows = conn.Execute(sql, parameters);

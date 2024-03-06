@@ -1,23 +1,33 @@
-namespace expenseTrackerAPI.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace expenseTrackerAPI.Models.User
 {
     public class User
     {
-        public int userId { get; set; }
+        public int? UserId { get; set; }
 
-        public string username { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Username { get; set; }
         
-        public string password { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Password { get; set; }
         
-        public string email { get; set; }
+        [Required]
+        [StringLength(30)]
+        [EmailAddress]
+        public string Email { get; set; }
         
-        public int roleId { get; set; }
+        [Required]
+        public int RoleId { get; set; }
         
-        public DateTime? createdAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         
-        public DateTime? updatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
-        public DateTime? deletedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
-        public bool? isDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

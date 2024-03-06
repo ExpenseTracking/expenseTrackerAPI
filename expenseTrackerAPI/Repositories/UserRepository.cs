@@ -1,6 +1,7 @@
 using Dapper;
 using MySql.Data.MySqlClient;
-using expenseTrackerAPI.Models;
+using expenseTrackerAPI.Models.User;
+using System.Data;
 
 
 namespace expenseTrackerAPI.Repositories
@@ -48,14 +49,14 @@ namespace expenseTrackerAPI.Repositories
                 //                 VALUES (@username, @password, @email, @roleId, @createdAt, @updatedAt, @deletedAt, @isDeleted); 
                 //                 SELECT SCOPE_IDENTITY();";
                 var parameters = new DynamicParameters();
-                parameters.Add("@username", user.username);
-                parameters.Add("@password", user.password);
-                parameters.Add("@email", user.email);
-                parameters.Add("@roleId", user.roleId);
-                parameters.Add("@createdAt", DateTime.UtcNow);
-                parameters.Add("@updatedAt", DateTime.UtcNow);
-                parameters.Add("@deletedAt", null);
-                parameters.Add("@isDeleted", 0);
+                parameters.Add("@username", user.Username, DbType.String);
+                parameters.Add("@password", user.Password, DbType.String);
+                parameters.Add("@email", user.Email, DbType.String);
+                parameters.Add("@roleId", user.RoleId, DbType.Int16);
+                parameters.Add("@createdAt", DateTime.UtcNow, DbType.DateTime);
+                parameters.Add("@updatedAt", DateTime.UtcNow, DbType.DateTime);
+                parameters.Add("@deletedAt", null, DbType.DateTime);
+                parameters.Add("@isDeleted", 0, DbType.Boolean);
 
                 return conn.ExecuteScalar<int>(sql, parameters);
             }
@@ -69,11 +70,11 @@ namespace expenseTrackerAPI.Repositories
                                 SET username = @username, password = @password, email = @email, roleId = @roleId, updatedAt = @updatedAt
                                 WHERE userId = @userId;";
                 var parameters = new DynamicParameters();
-                parameters.Add("@userId", user.userId);
-                parameters.Add("@username", user.username);
-                parameters.Add("@password", user.password);
-                parameters.Add("@email", user.email);
-                parameters.Add("@roleId", user.roleId);
+                parameters.Add("@userId", user.UserId);
+                parameters.Add("@username", user.Username);
+                parameters.Add("@password", user.Password);
+                parameters.Add("@email", user.Email);
+                parameters.Add("@roleId", user.RoleId);
                 parameters.Add("@updatedAt", DateTime.UtcNow);
 
                 var rows = conn.Execute(sql, parameters);
