@@ -30,7 +30,7 @@ namespace expenseTrackerAPI.Repositories
             {
                 string sql = $"SELECT * FROM users WHERE userId = @id and isDeleted = 0";
                 var parameters = new DynamicParameters();
-                parameters.Add("@id", id);
+                parameters.Add("@id", id, DbType.Int16);
 
                 return conn.QuerySingle<User>(sql, parameters);
             }
@@ -70,12 +70,12 @@ namespace expenseTrackerAPI.Repositories
                                 SET username = @username, password = @password, email = @email, roleId = @roleId, updatedAt = @updatedAt
                                 WHERE userId = @userId;";
                 var parameters = new DynamicParameters();
-                parameters.Add("@userId", user.UserId);
-                parameters.Add("@username", user.Username);
-                parameters.Add("@password", user.Password);
-                parameters.Add("@email", user.Email);
-                parameters.Add("@roleId", user.RoleId);
-                parameters.Add("@updatedAt", DateTime.UtcNow);
+                parameters.Add("@userId", user.UserId, DbType.Int16);
+                parameters.Add("@username", user.Username, DbType.String);
+                parameters.Add("@password", user.Password, DbType.String);
+                parameters.Add("@email", user.Email, DbType.String);
+                parameters.Add("@roleId", user.RoleId, DbType.Int16);
+                parameters.Add("@updatedAt", DateTime.UtcNow, DbType.DateTime);
 
                 var rows = conn.Execute(sql, parameters);
                 return rows > 0;
@@ -90,7 +90,7 @@ namespace expenseTrackerAPI.Repositories
                                 SET isDeleted = 1
                                 WHERE userId = @id";
                 var parameters = new DynamicParameters();
-                parameters.Add("@id", id);
+                parameters.Add("@id", id, DbType.Int16);
 
                 var rows = conn.Execute(sql, parameters);
                 return rows > 0;

@@ -4,6 +4,7 @@ using expenseTrackerAPI.Models.Expense;
 using expenseTrackerAPI.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Data;
 
 
 namespace expenseTrackerAPI.Repositories
@@ -32,7 +33,7 @@ namespace expenseTrackerAPI.Repositories
             {
                 string sql = $"SELECT * FROM expenses WHERE expenseId = @id and isDeleted = 0";
                 var parameters = new DynamicParameters();
-                parameters.Add("@id", id);
+                parameters.Add("@id", id, DbType.Int16);
 
                 return conn.QuerySingle<Expense>(sql, parameters);
             }
@@ -53,15 +54,15 @@ namespace expenseTrackerAPI.Repositories
                 //                 SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@userId", expense.UserId);
-                parameters.Add("@transactionTypeId", expense.TransactionTypeId);
-                parameters.Add("@amount", expense.Amount);
-                parameters.Add("@date", expense.Date);
-                parameters.Add("@description", expense.Description);
-                parameters.Add("@createdAt", DateTime.UtcNow);
-                parameters.Add("@updatedAt", DateTime.UtcNow);
-                parameters.Add("@deletedAt", null);
-                parameters.Add("@isDeleted", 0);
+                parameters.Add("@userId", expense.UserId, DbType.Int16);
+                parameters.Add("@transactionTypeId", expense.TransactionTypeId, DbType.Int16);
+                parameters.Add("@amount", expense.Amount, DbType.Decimal);
+                parameters.Add("@date", expense.Date, DbType.DateTime);
+                parameters.Add("@description", expense.Description, DbType.String);
+                parameters.Add("@createdAt", DateTime.UtcNow, DbType.DateTime);
+                parameters.Add("@updatedAt", DateTime.UtcNow, DbType.DateTime);
+                parameters.Add("@deletedAt", null, DbType.DateTime);
+                parameters.Add("@isDeleted", 0, DbType.Boolean);
 
                 return conn.ExecuteScalar<int>(sql, parameters);
             }
@@ -76,13 +77,13 @@ namespace expenseTrackerAPI.Repositories
                                 WHERE expenseId = @expenseId;";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@expenseId", expense.ExpenseId);
-                parameters.Add("@userId", expense.UserId);
-                parameters.Add("@transactionTypeId", expense.TransactionTypeId);
-                parameters.Add("@amount", expense.Amount);
-                parameters.Add("@date", expense.Date);
-                parameters.Add("@description", expense.Description);
-                parameters.Add("@updatedAt", DateTime.UtcNow);
+                parameters.Add("@expenseId", expense.ExpenseId, DbType.Int16);
+                parameters.Add("@userId", expense.UserId, DbType.Int16);
+                parameters.Add("@transactionTypeId", expense.TransactionTypeId, DbType.Int16);
+                parameters.Add("@amount", expense.Amount, DbType.Decimal);
+                parameters.Add("@date", expense.Date, DbType.DateTime);
+                parameters.Add("@description", expense.Description, DbType.String);
+                parameters.Add("@updatedAt", DateTime.UtcNow, DbType.DateTime);
 
                 var rows = conn.Execute(sql, parameters);
                 return rows > 0;
@@ -97,7 +98,7 @@ namespace expenseTrackerAPI.Repositories
                                 SET isDeleted = 1
                                 WHERE expenseId = @id";
                 var parameters = new DynamicParameters();
-                parameters.Add("@id", id);
+                parameters.Add("@id", id, DbType.Int16);
 
                 var rows = conn.Execute(sql, parameters);
                 return rows > 0;
