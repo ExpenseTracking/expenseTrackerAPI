@@ -1,5 +1,7 @@
 using Dapper;
 using MySql.Data.MySqlClient;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Data.SqlClient;
 using expenseTrackerAPI.Models.User;
 using System.Data;
 
