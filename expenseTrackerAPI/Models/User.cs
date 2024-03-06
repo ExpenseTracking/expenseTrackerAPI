@@ -4,7 +4,7 @@ namespace expenseTrackerAPI.Models.User
 {
     public class User
     {
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         [Required]
         [StringLength(20)]
