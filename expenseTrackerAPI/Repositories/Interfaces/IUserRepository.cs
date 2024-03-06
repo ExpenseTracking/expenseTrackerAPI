@@ -1,4 +1,4 @@
-using expenseTrackerAPI.Models;
+using expenseTrackerAPI.Models.User;
 
 namespace expenseTrackerAPI.Repositories
 {

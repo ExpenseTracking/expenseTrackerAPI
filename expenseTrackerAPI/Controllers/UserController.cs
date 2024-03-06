@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using expenseTrackerAPI.Models;
+using expenseTrackerAPI.Models.User;
 using expenseTrackerAPI.Services;
 
 namespace expenseTrackerAPI.Controllers
@@ -73,11 +73,11 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _userService.UpdateUser(user);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated userId: {user.userId}");
+                    return StatusCode(200, $"Successfully updated userId: {user.UserId}");
                 }
                 else
                 {
-                    return StatusCode(400, $"Unable to update userId: {user.userId}");
+                    return StatusCode(400, $"Unable to update userId: {user.UserId}");
                 }
             }
             catch (Exception ex)

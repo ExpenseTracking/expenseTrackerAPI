@@ -1,28 +1,33 @@
-﻿using System.Data.SqlTypes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace expenseTrackerAPI.Models.Expense
 {
     public class Expense
     {
-        public int expenseId { get; set; }
+        public int ExpenseId { get; set; }
 
-        public int userId { get; set; }
+        [Required]
+        public int UserId { get; set; }
 
-        public int transactionTypeId { get; set; }
+        [Required]
+        public int TransactionTypeId { get; set; }
 
-        public decimal amount { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString="{0:C}")]
+        public decimal Amount { get; set; }
 
         // date of actual expense occurring
-        public DateTime date { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
 
-        public string? description { get; set; }
+        public string? Description { get; set; }
 
-        public DateTime? createdAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
-        public DateTime? updatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
-        public DateTime? deletedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
-        public bool? isDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

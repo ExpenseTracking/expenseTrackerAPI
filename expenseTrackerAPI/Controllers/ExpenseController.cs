@@ -73,11 +73,11 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _expenseService.UpdateExpense(expense);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated expenseId: {expense.expenseId}");
+                    return StatusCode(200, $"Successfully updated expenseId: {expense.ExpenseId}");
                 }
                 else
                 {
-                    return StatusCode(400, $"Unable to update expenseId: {expense.expenseId}");
+                    return StatusCode(400, $"Unable to update expenseId: {expense.ExpenseId}");
                 }
             }
             catch (Exception ex)
