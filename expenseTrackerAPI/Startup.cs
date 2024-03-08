@@ -17,7 +17,7 @@ namespace expenseTrackerAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var conn = Configuration.GetValue<string>("ConnectionStrings:MySqlConnection");
+            var conn = Configuration.GetValue<string>("ConnectionStrings:SqlConnection");
 
             services.AddControllers();
             // services.AddResponseCaching();

@@ -65,7 +65,7 @@ namespace expenseTrackerAPI.Controllers
         }
 
         // PUT: api/user/{id}
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult UpdateUser(User user)
         {
             try

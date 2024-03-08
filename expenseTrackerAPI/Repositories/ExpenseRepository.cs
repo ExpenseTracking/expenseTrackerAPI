@@ -1,9 +1,6 @@
 using Dapper;
-using MySql.Data.MySqlClient;
 using expenseTrackerAPI.Models.Expense;
-using expenseTrackerAPI.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 
@@ -20,7 +17,7 @@ namespace expenseTrackerAPI.Repositories
 
         public IEnumerable<Expense> GetExpenses()
         {   
-            using (var conn = new MySqlConnection(_connectionString))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = "SELECT * FROM expenses WHERE isDeleted = 0";
                 return conn.Query<Expense>(sql);
@@ -29,7 +26,7 @@ namespace expenseTrackerAPI.Repositories
 
         public Expense GetExpenseById(int id)
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $"SELECT * FROM expenses WHERE expenseId = @id and isDeleted = 0";
                 var parameters = new DynamicParameters();
@@ -41,17 +38,17 @@ namespace expenseTrackerAPI.Repositories
 
         public int CreateExpense(Expense expense)
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 // query for mysql
-                string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
-                               VALUES (@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted); 
-                               SELECT LAST_INSERT_ID();";
+                //string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
+                //               VALUES (@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted); 
+                //               SELECT LAST_INSERT_ID();";
 
                 // query for sql server
-                // string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
-                //                 VALUES(@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted);
-                //                 SELECT SCOPE_IDENTITY();";
+                string sql = $@"INSERT INTO expenses (userId, transactionTypeId, amount, date, description, createdAt, updatedAt, deletedAt, isDeleted)
+                                 VALUES(@userId, @transactionTypeId, @amount, @date, @description, @createdAt, @updatedAt, @deletedAt, @isDeleted);
+                                 SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@userId", expense.UserId, DbType.Int16);
@@ -70,7 +67,7 @@ namespace expenseTrackerAPI.Repositories
 
         public bool UpdateExpense(Expense expense)
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"UPDATE expenses 
                                 SET userId = @userId, transactionTypeId = @transactionTypeId, amount = @amount, date = @date, description = @description, updatedAt = @updatedAt
@@ -92,7 +89,7 @@ namespace expenseTrackerAPI.Repositories
 
         public bool DeleteExpense(int id)
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"UPDATE expenses
                                 SET isDeleted = 1
