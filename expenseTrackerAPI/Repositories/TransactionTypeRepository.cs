@@ -15,12 +15,17 @@ namespace expenseTrackerAPI.Repositories
             _connectionString = connectionString;
         }
 
-        public IEnumerable<TransactionType> GetTransactionTypes()
+        public IEnumerable<TransactionType> GetTransactionTypes(TransactionType transactionType)
         {   
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT * FROM transactionTypes";
-                return conn.Query<TransactionType>(sql);
+                string sql = $@"SELECT * FROM transactionTypes
+                                WHERE userId = @id OR userId IS NULL";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@userId", transactionType.UserId, DbType.Int16);
+
+                return conn.Query<TransactionType>(sql, parameters);
             }
         }
 
@@ -47,12 +52,13 @@ namespace expenseTrackerAPI.Repositories
                 //               SELECT LAST_INSERT_ID();";
 
                 // query for sql server
-                string sql = $@"INSERT INTO transactionTypes (transactionTypeName, isDeleted)
-                                 VALUES(@transactionTypeName, @isDeleted);
+                string sql = $@"INSERT INTO transactionTypes (transactionTypeName, userId, isDeleted)
+                                 VALUES(@transactionTypeName, @userId, @isDeleted);
                                  SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@transactionTypeName", transactionType.TransactionTypeName, DbType.String);
+                parameters.Add("@userId", transactionType.UserId, DbType.Int16);
                 parameters.Add("@isDeleted", 0, DbType.Boolean);
 
                 return conn.ExecuteScalar<int>(sql, parameters);

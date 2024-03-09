@@ -12,9 +12,9 @@ namespace expenseTrackerAPI.Services
             _transactionTypeRepository = transactionTypeRepository;
         }
 
-        public IEnumerable<TransactionType> GetTransactionTypes()
+        public IEnumerable<TransactionType> GetTransactionTypes(TransactionType transactionType)
         {
-            return _transactionTypeRepository.GetTransactionTypes();
+            return _transactionTypeRepository.GetTransactionTypes(transactionType);
         }
 
         public TransactionType GetTransactionTypeById(int id)

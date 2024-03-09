@@ -17,11 +17,11 @@ namespace expenseTrackerAPI.Controllers
 
         // GET: api/transactionType
         [HttpGet]
-        public IActionResult GetTransactionTypes()
+        public IActionResult GetTransactionTypes(TransactionType transactionType)
         {
             try
             {
-                var expenses = _transactionTypeService.GetTransactionTypes();
+                var expenses = _transactionTypeService.GetTransactionTypes(transactionType);
                 return StatusCode(200, expenses);
             }
             catch (Exception ex)

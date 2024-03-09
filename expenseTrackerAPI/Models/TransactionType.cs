@@ -6,6 +6,9 @@ namespace expenseTrackerAPI.Models
     {
         public int TransactionTypeId { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
+
         public string TransactionTypeName { get; set; }
 
         public bool? IsDeleted { get; set; }
