@@ -19,7 +19,7 @@ namespace expenseTrackerAPI.Repositories
         {   
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT * FROM transactionTypes";
+                string sql = $@"SELECT * FROM transactionTypes";
                 return conn.Query<TransactionType>(sql);
             }
         }
@@ -28,7 +28,8 @@ namespace expenseTrackerAPI.Repositories
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $"SELECT * FROM transactionTypes WHERE transactionTypeId = @id";
+                string sql = $@"SELECT * FROM transactionTypes 
+                                WHERE transactionTypeId = @id";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 
@@ -46,13 +47,13 @@ namespace expenseTrackerAPI.Repositories
                 //               SELECT LAST_INSERT_ID();";
 
                 // query for sql server
-                string sql = $@"INSERT INTO transactionTypes (transactionTypeId, transactionTypeName)
-                                 VALUES(@transactionTypeId, @transactionTypeName);
+                string sql = $@"INSERT INTO transactionTypes (transactionTypeName, isDeleted)
+                                 VALUES(@transactionTypeName, @isDeleted);
                                  SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@transactionTypeId", transactionType.TransactionTypeId, DbType.Int16);
                 parameters.Add("@transactionTypeName", transactionType.TransactionTypeName, DbType.String);
+                parameters.Add("@isDeleted", 0, DbType.Boolean);
 
                 return conn.ExecuteScalar<int>(sql, parameters);
             }
@@ -63,8 +64,8 @@ namespace expenseTrackerAPI.Repositories
             using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"UPDATE transactionTypes 
-                                SET transactionTypeId = @transactionTypeId, transactionTypeName = @transactionTypeName
-                                WHERE transactionTypeId = @transactionTypeId;";
+                                SET transactionTypeName = @transactionTypeName
+                                WHERE transactionTypeId = @transactionTypeId AND isDeleted = 0;";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@transactionTypeId", transactionType.TransactionTypeId, DbType.Int16);

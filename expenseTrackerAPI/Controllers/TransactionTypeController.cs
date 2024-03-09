@@ -65,7 +65,7 @@ namespace expenseTrackerAPI.Controllers
         }
 
         // PUT: api/transactionType/{id}
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult UpdateTransactionType(TransactionType transactionType)
         {
             try
