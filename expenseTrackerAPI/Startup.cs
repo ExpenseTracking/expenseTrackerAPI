@@ -1,5 +1,3 @@
-using System.Configuration;
-using expenseTrackerAPI.Models.Expense;
 using expenseTrackerAPI.Repositories;
 using expenseTrackerAPI.Services;
 using Microsoft.OpenApi.Models;
@@ -33,8 +31,10 @@ namespace expenseTrackerAPI
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IIncomeSourceService, IncomeSourceService>();
             services.AddSingleton<IUserRepository>(p => new UserRepository(conn));
             services.AddSingleton<IExpenseRepository>(p => new ExpenseRepository(conn));
+            services.AddSingleton<IIncomeSourceRepository>(p => new IncomeSourceRepository(conn));
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
