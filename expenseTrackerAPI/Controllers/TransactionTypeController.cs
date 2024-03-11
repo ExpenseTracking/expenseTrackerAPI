@@ -32,14 +32,14 @@ namespace expenseTrackerAPI.Controllers
 
         // GET: api/transactionType/{id}
         [HttpGet("{id}")]
-        public IActionResult GetTransactionTypeById(int id)
+        public IActionResult GetTransactionTypeByUserId(int id)
         {
             try
             {
-                var transactionType = _transactionTypeService.GetTransactionTypeById(id);
+                var transactionType = _transactionTypeService.GetTransactionTypeByUserId(id);
                 if (transactionType == null)
                 {
-                    return StatusCode(404, $"No transaction type found with id: {id}");
+                    return StatusCode(404, $"No transaction type found for user id: {id}");
                 }
                 return StatusCode(200, transactionType);
             }

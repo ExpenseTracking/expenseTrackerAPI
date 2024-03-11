@@ -19,21 +19,22 @@ namespace expenseTrackerAPI.Repositories
         {   
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT * FROM transactionTypes";
+                string sql = $@"SELECT * FROM transactionTypes
+                                WHERE userId IS NULL";
                 return conn.Query<TransactionType>(sql);
             }
         }
 
-        public TransactionType GetTransactionTypeById(int id)
+        public IEnumerable<TransactionType> GetTransactionTypeByUserId(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"SELECT * FROM transactionTypes 
-                                WHERE transactionTypeId = @id";
+                                WHERE (userId = @id OR userId IS NULL) AND isDeleted = 0";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 
-                return conn.QuerySingle<TransactionType>(sql, parameters);
+                return conn.Query<TransactionType>(sql, parameters);
             }
         }
 
@@ -47,11 +48,12 @@ namespace expenseTrackerAPI.Repositories
                 //               SELECT LAST_INSERT_ID();";
 
                 // query for sql server
-                string sql = $@"INSERT INTO transactionTypes (transactionTypeName, isDeleted)
-                                 VALUES(@transactionTypeName, @isDeleted);
+                string sql = $@"INSERT INTO transactionTypes (userId, transactionTypeName, isDeleted)
+                                 VALUES(@userId, @transactionTypeName, @isDeleted);
                                  SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
+                parameters.Add("@userId", transactionType.UserId, DbType.Int16);
                 parameters.Add("@transactionTypeName", transactionType.TransactionTypeName, DbType.String);
                 parameters.Add("@isDeleted", 0, DbType.Boolean);
 
