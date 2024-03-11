@@ -6,39 +6,37 @@ using System.Data;
 
 namespace expenseTrackerAPI.Repositories
 {
-    public class IncomeSourceRepository : IIncomeSourceRepository
+    public class UserRolesRepository : IUserRolesRepository
     {
         private readonly string _connectionString;
 
-        public IncomeSourceRepository(string connectionString)
+        public UserRolesRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public IEnumerable<IncomeSource> GetIncomeSources()
+        public IEnumerable<UserRoles> GetUserRoles()
         {   
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT * FROM incomeSource 
-                                WHERE isDeleted = 0";
-                return conn.Query<IncomeSource>(sql);
+                string sql = "SELECT * FROM userRoles";
+                return conn.Query<UserRoles>(sql);
             }
         }
 
-        public IEnumerable<IncomeSource> GetIncomeSourceByUserId(int id)
+        public UserRoles GetUserRoleById(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT * FROM incomeSource 
-                                WHERE (userId = @id OR userId IS NULL) AND isDeleted = 0";
+                string sql = $"SELECT * FROM userRoles WHERE roleId = @id";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 
-                return conn.Query<IncomeSource>(sql, parameters);
+                return conn.QuerySingle<UserRoles>(sql, parameters);
             }
         }
 
-        public int CreateIncomeSource(IncomeSource incomeSource)
+        public int CreateUserRole(UserRoles userRole)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -48,43 +46,42 @@ namespace expenseTrackerAPI.Repositories
                 //               SELECT LAST_INSERT_ID();";
 
                 // query for sql server
-                string sql = $@"INSERT INTO incomeSource (userId, incomeSourceName, isDeleted)
-                                 VALUES(@userId, @incomeSourceName, @isDeleted);
+                string sql = $@"INSERT INTO userRoles (roleName)
+                                 VALUES(@roleName);
                                  SELECT SCOPE_IDENTITY();";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@userId", incomeSource.UserId, DbType.Int16);
-                parameters.Add("@incomeSourceName", incomeSource.IncomeSourceName, DbType.String);
-                parameters.Add("@isDeleted", 0, DbType.Boolean);
+                //parameters.Add("@roleId", userRole.RoleId, DbType.Int16);
+                parameters.Add("@roleName", userRole.RoleName, DbType.String);
 
                 return conn.ExecuteScalar<int>(sql, parameters);
             }
         }
 
-        public bool UpdateIncomeSource(IncomeSource incomeSource)
+        public bool UpdateUserRole(UserRoles userRole)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"UPDATE incomeSource 
-                                SET incomeSourceName = @incomeSourceName
-                                WHERE incomeSourceId = @incomeSourceId;";
+                string sql = $@"UPDATE userRoles 
+                                SET roleName = @roleName
+                                WHERE roleId = @roleId;";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("@incomeSourceId", incomeSource.IncomeSourceId, DbType.Int16);
-                parameters.Add("@incomeSourceName", incomeSource.IncomeSourceName, DbType.String);
+                parameters.Add("@roleId", userRole.RoleId, DbType.Int16);
+                parameters.Add("@roleName", userRole.RoleName, DbType.String);
 
                 var rows = conn.Execute(sql, parameters);
                 return rows > 0;
             }
         }
 
-        public bool DeleteIncomeSource(int id)
+        public bool DeleteUserRole(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"UPDATE incomeSource
+                string sql = $@"UPDATE userRoles
                                 SET isDeleted = 1
-                                WHERE incomeSourceId = @id";
+                                WHERE roleId = @id";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 

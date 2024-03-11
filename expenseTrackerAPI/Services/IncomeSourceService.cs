@@ -17,9 +17,9 @@ namespace expenseTrackerAPI.Services
             return _incomeSourceRepository.GetIncomeSources();
         }
 
-        public IncomeSource GetIncomeSourceById(int id)
+        public IEnumerable<IncomeSource> GetIncomeSourceByUserId(int id)
         {
-            return _incomeSourceRepository.GetIncomeSourceById(id);
+            return _incomeSourceRepository.GetIncomeSourceByUserId(id);
         }
 
         public int CreateIncomeSource(IncomeSource incomeSource)

@@ -5,7 +5,7 @@ namespace expenseTrackerAPI.Repositories
     public interface IIncomeSourceRepository
     {
         IEnumerable<IncomeSource> GetIncomeSources();
-        IncomeSource GetIncomeSourceById(int id);
+        IEnumerable<IncomeSource> GetIncomeSourceByUserId(int id);
         int CreateIncomeSource(IncomeSource incomeSource);
         bool UpdateIncomeSource(IncomeSource incomeSource);
         bool DeleteIncomeSource(int id);

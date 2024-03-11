@@ -32,11 +32,11 @@ namespace expenseTrackerAPI.Controllers
 
         // GET: api/incomeSource/{id}
         [HttpGet("{id}")]
-        public IActionResult GetIncomeSourceById(int id)
+        public IActionResult GetIncomeSourceByUserId(int id)
         {
             try
             {
-                var incomeSource = _incomeSourceService.GetIncomeSourceById(id);
+                var incomeSource = _incomeSourceService.GetIncomeSourceByUserId(id);
                 if (incomeSource == null)
                 {
                     return StatusCode(404, $"No income source found with id: {id}");
@@ -64,8 +64,8 @@ namespace expenseTrackerAPI.Controllers
             }
         }
 
-        // PUT: api/incomeSource/{id}
-        [HttpPut("{id}")]
+        // PUT: api/incomeSource
+        [HttpPut]
         public IActionResult UpdateIncomeSource(IncomeSource incomeSource)
         {
             try
