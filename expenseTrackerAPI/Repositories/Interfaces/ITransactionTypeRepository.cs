@@ -4,7 +4,7 @@ namespace expenseTrackerAPI.Repositories
 {
     public interface ITransactionTypeRepository
     {
-        IEnumerable<TransactionType> GetTransactionTypes(TransactionType transactionType);
+        IEnumerable<TransactionType> GetTransactionTypes();
         TransactionType GetTransactionTypeById(int id);
         int CreateTransactionType(TransactionType transactionType);
         bool UpdateTransactionType(TransactionType transactionType);
