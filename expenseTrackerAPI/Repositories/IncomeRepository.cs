@@ -19,7 +19,8 @@ namespace expenseTrackerAPI.Repositories
         {   
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT * FROM income WHERE isDeleted = 0";
+                string sql = $@"SELECT * FROM income 
+                                WHERE isDeleted = 0";
                 return conn.Query<Income>(sql);
             }
         }
@@ -28,7 +29,8 @@ namespace expenseTrackerAPI.Repositories
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $"SELECT * FROM income WHERE incomeId = @id and isDeleted = 0";
+                string sql = $@"SELECT * FROM income 
+                                WHERE incomeId = @id AND isDeleted = 0";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 
@@ -70,12 +72,11 @@ namespace expenseTrackerAPI.Repositories
             using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"UPDATE income 
-                                SET userId = @userId, incomeSourceId = @incomeSourceId, amount = @amount, date = @date, description = @description, updatedAt = @updatedAt
+                                SET incomeSourceId = @incomeSourceId, amount = @amount, date = @date, description = @description, updatedAt = @updatedAt
                                 WHERE incomeId = @incomeId;";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@incomeId", income.IncomeId, DbType.Int16);
-                parameters.Add("@userId", income.UserId, DbType.Int16);
                 parameters.Add("@incomeSourceId", income.IncomeSourceId, DbType.Int16);
                 parameters.Add("@amount", income.Amount, DbType.Decimal);
                 parameters.Add("@date", income.Date, DbType.DateTime);
