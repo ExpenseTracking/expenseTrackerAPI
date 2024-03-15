@@ -32,14 +32,14 @@ namespace expenseTrackerAPI.Controllers
 
         // GET: api/expense/{id}
         [HttpGet("{id}")]
-        public IActionResult GetExpenseById(int id)
+        public IActionResult GetExpenseByUserId(int id)
         {
             try
             {
-                var expense = _expenseService.GetExpenseById(id);
+                var expense = _expenseService.GetExpenseByUserId(id);
                 if (expense == null)
                 {
-                    return StatusCode(404, $"No expense found with id: {id}");
+                    return StatusCode(404, $"No expense found for user id: {id}");
                 }
                 return StatusCode(200, expense);
             }

@@ -19,20 +19,22 @@ namespace expenseTrackerAPI.Repositories
         {   
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT * FROM expenses WHERE isDeleted = 0";
+                string sql = $@"SELECT * FROM expenses 
+                                WHERE isDeleted = 0";
                 return conn.Query<Expense>(sql);
             }
         }
 
-        public Expense GetExpenseById(int id)
+        public IEnumerable<Expense> GetExpenseByUserId(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $"SELECT * FROM expenses WHERE expenseId = @id and isDeleted = 0";
+                string sql = $@"SELECT * FROM expenses 
+                                WHERE userId = @id AND isDeleted = 0";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 
-                return conn.QuerySingle<Expense>(sql, parameters);
+                return conn.Query<Expense>(sql, parameters);
             }
         }
 
