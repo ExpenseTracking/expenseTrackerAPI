@@ -39,7 +39,7 @@ namespace expenseTrackerAPI.Controllers
                 var incomeSource = _incomeSourceService.GetIncomeSourceByUserId(id);
                 if (incomeSource == null)
                 {
-                    return StatusCode(404, $"No income source found with id: {id}");
+                    return StatusCode(404, $"No income source found for user id: {id}");
                 }
                 return StatusCode(200, incomeSource);
             }
