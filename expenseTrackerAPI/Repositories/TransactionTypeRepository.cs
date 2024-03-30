@@ -20,7 +20,7 @@ namespace expenseTrackerAPI.Repositories
             using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"SELECT * FROM transactionTypes
-                                WHERE userId IS NULL";
+                                WHERE userId IS NULL AND isDeleted = 0";
                 return conn.Query<TransactionType>(sql);
             }
         }

@@ -20,7 +20,7 @@ namespace expenseTrackerAPI.Repositories
             using (var conn = new SqlConnection(_connectionString))
             {
                 string sql = $@"SELECT * FROM incomeSource 
-                                WHERE isDeleted = 0";
+                                WHERE userId IS NULL AND isDeleted = 0";
                 return conn.Query<IncomeSource>(sql);
             }
         }
