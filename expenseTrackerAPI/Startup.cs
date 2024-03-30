@@ -24,6 +24,16 @@ namespace expenseTrackerAPI
             // add JWT Auth
 
             // add CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", 
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
 
             // add common logger
 
@@ -66,7 +76,10 @@ namespace expenseTrackerAPI
             app.UseRouting();
             // app.UseAuthentication();
             // app.UseAuthorization();
-            // app.UseCors("CORSPolicy");
+
+            // CORS policy defined above
+            app.UseCors("AllowAll");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
