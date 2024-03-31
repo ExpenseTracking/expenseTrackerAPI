@@ -29,5 +29,9 @@ namespace expenseTrackerAPI.Models
         public DateTime? DeletedAt { get; set; }
 
         public bool? IsDeleted { get; set; }
+        public string? IncomeSourceName { get; set; }
+
+        public string? UserName { get; set; }
+
     }
 }

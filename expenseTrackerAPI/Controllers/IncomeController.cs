@@ -32,11 +32,11 @@ namespace expenseTrackerAPI.Controllers
 
         // GET: api/income/{id}
         [HttpGet("{id}")]
-        public IActionResult GetIncomeById(int id)
+        public IActionResult GetIncomeByUserId(int id)
         {
             try
             {
-                var income = _incomeService.GetIncomeById(id);
+                var income = _incomeService.GetIncomeByUserId(id);
                 if (income == null)
                 {
                     return StatusCode(404, $"No income found with id: {id}");
