@@ -29,10 +29,15 @@ namespace expenseTrackerAPI.Repositories
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT * FROM expenses 
-                                WHERE userId = @id AND isDeleted = 0";
+                string sql = $@"SELECT e.*
+	                                   ,s.transactionTypeName
+	                                   ,u.username
+                                FROM expenses e
+                                JOIN transactionTypes s ON e.transactionTypeId = s.transactionTypeId
+                                JOIN users u ON e.userId = u.userId
+                                WHERE e.userId = @userId AND e.isDeleted = 0";
                 var parameters = new DynamicParameters();
-                parameters.Add("@id", id, DbType.Int16);
+                parameters.Add("@userId", id, DbType.Int16);
 
                 return conn.Query<Expense>(sql, parameters);
             }
