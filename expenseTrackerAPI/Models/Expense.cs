@@ -29,5 +29,9 @@ namespace expenseTrackerAPI.Models.Expense
         public DateTime? DeletedAt { get; set; }
 
         public bool? IsDeleted { get; set; }
+
+        public string? transactionTypeName { get; set; }
+
+        public string? UserName { get; set; }
     }
 }

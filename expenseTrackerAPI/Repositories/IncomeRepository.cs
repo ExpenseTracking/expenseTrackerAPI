@@ -25,16 +25,21 @@ namespace expenseTrackerAPI.Repositories
             }
         }
 
-        public Income GetIncomeById(int id)
+        public IEnumerable<Income> GetIncomeByUserId(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT * FROM income 
-                                WHERE incomeId = @id AND isDeleted = 0";
+                string sql = $@"SELECT i.*
+	                                   ,s.incomeSourceName
+	                                   ,u.username
+                                FROM income i
+                                JOIN incomeSource s ON i.incomeSourceId = s.incomeSourceId
+                                JOIN users u ON i.userId = u.userId
+                                WHERE i.userId = @userId AND i.isDeleted = 0";
                 var parameters = new DynamicParameters();
-                parameters.Add("@id", id, DbType.Int16);
+                parameters.Add("@userId", id, DbType.Int16);
 
-                return conn.QuerySingle<Income>(sql, parameters);
+                return conn.Query<Income>(sql, parameters);
             }
         }
 
