@@ -22,14 +22,14 @@ namespace expenseTrackerAPI.Services
             return _incomeRepository.GetIncomeByUserId(id);
         }
 
-        public int CreateIncome(Income expense)
+        public int CreateIncome(Income income)
         {
-            return _incomeRepository.CreateIncome(expense);
+            return _incomeRepository.CreateIncome(income);
         }
 
-        public bool UpdateIncome(Income expense)
+        public bool UpdateIncome(Income income)
         {
-            return _incomeRepository.UpdateIncome(expense);
+            return _incomeRepository.UpdateIncome(income);
         }
 
         public bool DeleteIncome(int id)

@@ -45,12 +45,14 @@ namespace expenseTrackerAPI
             services.AddScoped<ITransactionTypeService, TransactionTypeService>();
             services.AddScoped<IIncomeService, IncomeService>();
             services.AddScoped<IIncomeSourceService, IncomeSourceService>();
+            services.AddScoped<IGoalsService, GoalsService>();
             services.AddSingleton<IUserRepository>(p => new UserRepository(conn));
             services.AddSingleton<IExpenseRepository>(p => new ExpenseRepository(conn));
             services.AddSingleton<IUserRolesRepository>(p => new UserRolesRepository(conn));
             services.AddSingleton<ITransactionTypeRepository>(p => new TransactionTypeRepository(conn));
             services.AddSingleton<IIncomeRepository>(p => new IncomeRepository(conn));
             services.AddSingleton<IIncomeSourceRepository>(p => new IncomeSourceRepository(conn));
+            services.AddSingleton<IGoalsRepository>(p => new GoalsRepository(conn));
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
