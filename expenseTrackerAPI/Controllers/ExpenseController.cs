@@ -73,7 +73,7 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _expenseService.UpdateExpense(expense);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated expenseId: {expense.ExpenseId}");
+                    return StatusCode(200, expense.ExpenseId);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace expenseTrackerAPI.Controllers
                 var deleted = _expenseService.DeleteExpense(id);
                 if (deleted)
                 {
-                    return StatusCode(200, $"Successfully deleted expenseId: {id}");
+                    return StatusCode(200, id);
                 }
                 else
                 {

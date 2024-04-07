@@ -73,7 +73,7 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _userRolesService.UpdateUserRole(userRole);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated roleId: {userRole.RoleId}");
+                    return StatusCode(200, userRole.RoleId);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace expenseTrackerAPI.Controllers
                 var deleted = _userRolesService.DeleteUserRole(id);
                 if (deleted)
                 {
-                    return StatusCode(200, $"Successfully deleted roleId: {id}");
+                    return StatusCode(200, id);
                 }
                 else
                 {
