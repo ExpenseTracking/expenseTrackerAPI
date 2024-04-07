@@ -73,7 +73,7 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _transactionTypeService.UpdateTransactionType(transactionType);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated transactionTypeId: {transactionType.TransactionTypeId}");
+                    return StatusCode(200, transactionType.TransactionTypeId);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace expenseTrackerAPI.Controllers
                 var deleted = _transactionTypeService.DeleteTransactionType(id);
                 if (deleted)
                 {
-                    return StatusCode(200, $"Successfully deleted transactionTypeId: {id}");
+                    return StatusCode(200, id);
                 }
                 else
                 {

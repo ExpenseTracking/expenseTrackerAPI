@@ -73,7 +73,7 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _userService.UpdateUser(user);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated userId: {user.UserId}");
+                    return StatusCode(200, user.UserId);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace expenseTrackerAPI.Controllers
                 var deleted = _userService.DeleteUser(id);
                 if (deleted)
                 {
-                    return StatusCode(200, $"Successfully deleted userId: {id}");
+                    return StatusCode(200, id);
                 }
                 else
                 {

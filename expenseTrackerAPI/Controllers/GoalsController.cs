@@ -73,7 +73,7 @@ namespace expenseTrackerAPI.Controllers
                 var updated = _goalsService.UpdateGoal(goals);
                 if(updated)
                 {
-                    return StatusCode(200, $"Successfully updated goalId: {goals.GoalId}");
+                    return StatusCode(200, goals.GoalId);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace expenseTrackerAPI.Controllers
                 var deleted = _goalsService.DeleteGoal(id);
                 if (deleted)
                 {
-                    return StatusCode(200, $"Successfully deleted goalId: {id}");
+                    return StatusCode(200, id);
                 }
                 else
                 {
