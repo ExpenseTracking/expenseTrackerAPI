@@ -24,7 +24,7 @@ namespace expenseTrackerAPI.Repositories
             }
         }
 
-        public User GetUserById(int id)
+        public IEnumerable<User> GetUserById(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -32,7 +32,7 @@ namespace expenseTrackerAPI.Repositories
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
 
-                return conn.QuerySingle<User>(sql, parameters);
+                return conn.Query<User>(sql, parameters);
             }
         }
 

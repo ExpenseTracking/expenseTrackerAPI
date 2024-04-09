@@ -17,7 +17,7 @@ namespace expenseTrackerAPI.Services
             return _userRepository.GetUsers();
         }
 
-        public User GetUserById(int id)
+        public IEnumerable<User> GetUserById(int id)
         {
             return _userRepository.GetUserById(id);
         }
