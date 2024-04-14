@@ -46,6 +46,7 @@ namespace expenseTrackerAPI
             services.AddScoped<IIncomeService, IncomeService>();
             services.AddScoped<IIncomeSourceService, IncomeSourceService>();
             services.AddScoped<IGoalsService, GoalsService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddSingleton<IUserRepository>(p => new UserRepository(conn));
             services.AddSingleton<IExpenseRepository>(p => new ExpenseRepository(conn));
             services.AddSingleton<IUserRolesRepository>(p => new UserRolesRepository(conn));
@@ -53,6 +54,7 @@ namespace expenseTrackerAPI
             services.AddSingleton<IIncomeRepository>(p => new IncomeRepository(conn));
             services.AddSingleton<IIncomeSourceRepository>(p => new IncomeSourceRepository(conn));
             services.AddSingleton<IGoalsRepository>(p => new GoalsRepository(conn));
+            services.AddSingleton<IAccountRepository>(p => new AccountRepository(conn));
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
