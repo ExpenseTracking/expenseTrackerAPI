@@ -14,13 +14,11 @@ namespace expenseTrackerAPI.Models.User
         [StringLength(20)]
         public string Password { get; set; }
         
-        [Required]
         [StringLength(30)]
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         
-        [Required]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         
         public DateTime? CreatedAt { get; set; }
         
