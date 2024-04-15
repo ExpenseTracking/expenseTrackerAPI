@@ -30,7 +30,7 @@ namespace expenseTrackerAPI.Repositories
             }
         }
 
-        public User GetAuthenticatedUserId(User user) 
+        public User GetAuthenticatedUser(User user) 
         {
             using (var conn = new SqlConnection(_connectionString))
             {
