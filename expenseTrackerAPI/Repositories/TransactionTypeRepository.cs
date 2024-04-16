@@ -29,10 +29,9 @@ namespace expenseTrackerAPI.Repositories
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sql = $@"SELECT t.*,
-                                       u.username 
+                string sql = $@"SELECT t.*, u.username 
                                 FROM transactionTypes t
-                                JOIN users u ON t.userId = u.userId
+                                LEFT JOIN users u ON t.userId = u.userId
                                 WHERE (t.userId = @id OR t.userId IS NULL) AND t.isDeleted = 0";
                 var parameters = new DynamicParameters();
                 parameters.Add("@id", id, DbType.Int16);
